@@ -1,137 +1,110 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct node
-{
+struct Node {
     int data;
-    struct node * next;
+    struct Node* next;
 };
 
-struct node* Creatnode(int data)
-{   
-    struct node* newnode = (struct node*)malloc(sizeof(struct node));
-    newnode->data=data;
-    newnode->next=NULL;
-    return newnode;
-}
-int SizeOfList(struct node* head)
-{
-    int i=0;
-    struct node* temp =head;
-    while(temp!=NULL)
-    {
-        i++;
-        temp=temp->next;
-    }
-    return i;
-}
+// Function to split the linked list into two halves
+void splitList(struct Node* source, struct Node** front, struct Node** back) {
+    struct Node* slow = source;
+    struct Node* fast = source->next;
 
-void Printlist(struct node* head)
-{
-    struct node* temp = head;
-    while(temp!=NULL)
-    {
-        printf("| %d |",temp->data);
-        temp=temp->next;
-    }
-}
-
-void merge(int *a, int l, int m, int h) 
-{
-    int i, j, k;
-    int b[50];
-    i = l;
-    j = m+1;
-    k = l;
-
-    while(i<=m && j<=h)
-    {
-        if(a[i] < a[j])
-        {
-            b[k] = a[i];
-            i++;
+    while (fast != NULL) {
+        fast = fast->next;
+        if (fast != NULL) {
+            slow = slow->next;
+            fast = fast->next;
         }
-        else
-        {
-            b[k] = a[j];
-            j++;
-        }
-        k++;
-
     }
 
-    while(i<=m)
-    {
-        b[k] = a[i];
-        i++;
-        k++;
-    }
-    while (j<=h)
-    {
-        b[k] = a[j];
-        j++;
-        k++;
-    }
-    
-    for(i=l;i<=h;i++)
-    {
-        a[i]=b[i];
-    }
+    *front = source;
+    *back = slow->next;
+    slow->next = NULL;
 }
 
-void mergeSort(int *a, int l, int h) {
-    if (l < h) {
-        int m = (l+h) / 2;
+// Function to merge two sorted linked lists
+struct Node* mergeLists(struct Node* a, struct Node* b) {
+    if (a == NULL) return b;
+    if (b == NULL) return a;
 
-        mergeSort(a, l, m);
-        mergeSort(a, m + 1, h);
+    struct Node* result = NULL;
 
-        merge(a, l, m, h);
+    if (a->data <= b->data) {
+        result = a;
+        result->next = mergeLists(a->next, b);
+    } else {
+        result = b;
+        result->next = mergeLists(a, b->next);
     }
+
+    return result;
 }
 
-void printarray(int *a, int size) {
-    for (int i = 0; i < size; i++)
-        printf("%d ", a[i]);
-    printf("\n");
+// Merge Sort function for linked list
+void mergeSort(struct Node** headRef) {
+    struct Node* head = *headRef;
+    if (head == NULL || head->next == NULL) {
+        return;
+    }
+
+    struct Node* a;
+    struct Node* b;
+
+    splitList(head, &a, &b);
+
+    mergeSort(&a);
+    mergeSort(&b);
+
+    *headRef = mergeLists(a, b);
 }
 
+// Function to insert a new node at the end of the linked list
+void push(struct Node** headRef, int newData) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = newData;
+    newNode->next = NULL;
 
-int main()
-{
-    struct node* b[5];
-    int i,data;
-    struct node* head;
-    
-    for(i=0;i<5;i++)
-    {
-        printf("Enter data : ");
+    if (*headRef == NULL) {
+        *headRef = newNode;
+        return;
+    }
+
+    struct Node* temp = *headRef;
+    while (temp->next != NULL) {
+        temp = temp->next;
+    }
+    temp->next = newNode;
+}
+
+// Function to print the linked list
+void printList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+// Main function
+int main() {
+    struct Node* head = NULL;
+    int data;
+    for(int i=0;i<7;i++)
+    {   
+        printf("Enter The Data : ");
         scanf("%d",&data);
-        b[i]=Creatnode(data);
-        if(i>0)
-        {
-            b[i-1]->next=b[i];
-        }
+        push(&head , data);
     }
-    head = b[0];
-    Printlist(head);
 
-    int n = SizeOfList(head);
-    int a[n];
+    printf("Original List:\n");
+    printList(head);
 
-    for(i=0;i<5;i++)
-    {
-        a[i]=b[i]->data;
-    }
-    mergeSort(a,0,n-1);
-    for(i=0;i<5;i++)
-    {
-        b[i]->data=a[i];
-    }
-    head=b[0];
-    printf("\nSorted Linked list\n");
-    Printlist(head);
+    mergeSort(&head);
 
-    return 0 ;
+    printf("Sorted List:\n");
+    printList(head);
 
+    return 0;
 }
