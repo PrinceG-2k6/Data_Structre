@@ -1,125 +1,117 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-struct node{
+// Node structure for circular linked list
+typedef struct Node {
     int data;
-    struct node* next;
-};
+    struct Node* next;
+} Node;
 
-struct node* createNode(struct node* head , int data){
-    struct node* Newnode = (struct node*)malloc(sizeof(struct node));
-    struct node* temp;
-    
-    Newnode->data = data;
-    Newnode->next = NULL;
-    if(head == NULL)
-    {
-        head = Newnode;
+// Function to create a new node
+Node* createNode(int data) {
+    Node* newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = newNode; // Circular link
+    return newNode;
+}
+
+// Function to insert a node at the end of a circular linked list
+Node* insertEnd(Node* head, int data) {
+    Node* newNode = createNode(data);
+    if (!head) {
+        return newNode;
     }
-    else
-    {
-        temp= head;
-        while (temp->next!=NULL)
-        {
-            temp = temp->next;
-        }
-        temp->next = Newnode;
-        
+    Node* temp = head;
+    while (temp->next != head) {
+        temp = temp->next;
     }
+    temp->next = newNode;
+    newNode->next = head;
     return head;
 }
 
-void printList(struct node* head)
-{
-    struct node* temp = head;
-    while(temp->next != head)
-    {
-        printf(" %d |",temp->data);
-        temp = temp->next;
+// Function to merge two sorted circular linked lists
+Node* mergeCircularLists(Node* head1, Node* head2) {
+    if (!head1) return head2;
+    if (!head2) return head1;
+
+    Node *result = NULL, *tail = NULL;
+
+    Node *curr1 = head1, *curr2 = head2;
+    do {
+        Node* newNode;
+        if (curr1->data <= curr2->data) {
+            newNode = createNode(curr1->data);
+            curr1 = curr1->next;
+        } else {
+            newNode = createNode(curr2->data);
+            curr2 = curr2->next;
+        }
+
+        if (!result) {
+            result = newNode;
+            tail = newNode;
+        } else {
+            tail->next = newNode;
+            tail = newNode;
+        }
+
+        if (curr1 == head1 || curr2 == head2) break;
+    } while (1);
+
+    // Append remaining elements
+    while (curr1 != head1) {
+        tail->next = createNode(curr1->data);
+        tail = tail->next;
+        curr1 = curr1->next;
     }
-    printf(" %d \n",temp->data);
+    while (curr2 != head2) {
+        tail->next = createNode(curr2->data);
+        tail = tail->next;
+        curr2 = curr2->next;
+    }
+
+    tail->next = result; // Make it circular
+    return result;
 }
-int main()
-{   
-    int i , n;
-    int data;
-    printf("Enter the number of nodes for 1st Sorted circular linked list : ");
-    scanf("%d",&n);
-    struct node* head1 = NULL;
-    struct node* tail1 = NULL;
-    for(i=0;i<n;i++)
-    {
-        
-        printf("Enter the data : ");
-        scanf("%d",&data);
-        head1 = createNode(head1 , data);
-    }
-    struct node* temp=head1;
-    while(temp->next!=NULL)
-    {
+
+// Function to print a circular linked list
+void printCircularList(Node* head) {
+    if (!head) return;
+    Node* temp = head;
+    do {
+        printf("%d ", temp->data);
         temp = temp->next;
-    }
-    tail1 = temp;
-    tail1->next = head1;
-    
-    printf("The 1st Circular Linked List is : ");
-    printList(head1);
+    } while (temp != head);
+    printf("\n");
+}
 
-    printf("Enter the number of nodes for 2nd Sorted circular linked list : ");
-    scanf("%d",&n);
-    struct node* head2 = NULL;
-    struct node* tail2 = NULL;
-    for(i=0;i<n;i++)
-    {
-        printf("Enter the data : ");
-        scanf("%d",&data);
-        head2 = createNode(head2 , data);
-    }
-    temp=head2;
-    while(temp->next!=NULL)
-    {
-        temp = temp->next;
-    }
-    tail2 = temp;
-    tail2->next = head2;
-    
-    printf("The 2nd Circular Linked List is : ");
-    printList(head2);
-    
-    struct node* temp1 = head1;
-    struct node* temp2 = head2;
-    struct node* head=0;
-    while(temp1!=0 && temp2!=0)
-    {
-        if(temp1->data < temp2->data)
-        {
-            head = createNode(head , temp1->data);
-            temp1 = temp1->next;
-        }
-        else 
-        {
-            head = createNode(head ,temp2->data);
-            temp2 = temp2->next;
-        }
-    }
+// Main function to test the merging
+int main() {
+    Node* list1 = NULL;
+    Node* list2 = NULL;
 
-    if(temp2=0)
-    {
-        while(temp1!=0)
-        {
-            head = createNode(head , temp1->data);
-            temp1 = temp1->next;
-        }
-    }else
-    {
-        while(temp2!=0)
-        {
-            head = createNode(head ,temp2->data);
-            temp2 = temp2->next;
-        }
-    }
+    // Creating first sorted circular linked list
+    list1 = insertEnd(list1, 1);
+    list1 = insertEnd(list1, 3);
+    list1 = insertEnd(list1, 5);
 
-    printf("The Merged Sorted Circular Linked List is :  ");
-    printList(head);
-    return 0 ;
+    // Creating second sorted circular linked list
+    list2 = insertEnd(list2, 2);
+    list2 = insertEnd(list2, 4);
+    list2 = insertEnd(list2, 6);
+
+    printf("List 1: ");
+    printCircularList(list1);
+
+    printf("List 2: ");
+    printCircularList(list2);
+
+    // Merging the two lists
+    Node* mergedList = mergeCircularLists(list1, list2);
+
+    printf("Merged List: ");
+    printCircularList(mergedList);
+
+    return 0;
 }
