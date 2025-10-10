@@ -4,7 +4,7 @@ int main()
     int n,m,i,j,k,x,y,z;
     printf("ENTER THE SIZE OF ARRAY\n");
     scanf("%d",&n);
-    
+    void printArray(int *a, int n);
     int a[n];
     printf("\n\nENTER THE ELEMENTS OF ARRAY\n");
     for(i=0;i<n;i++)
