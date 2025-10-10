@@ -38,10 +38,7 @@ int main()
         c[i]=a[i];
     }
 
-    for(i=0;i<n+1;i++)
-    {
-        printf("%d  ",c[i]);
-    }
+    printArray (a,n+1);
 
     printf("\n Enter the element u want to insert at specific index : ");
     scanf("%d",&x);
