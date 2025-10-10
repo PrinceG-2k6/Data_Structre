@@ -18,10 +18,7 @@ int main()
     }
 
     printf("\n The array is :");
-    for(i=0;i<n;i++)
-    {
-        printf("%d  ",a[i]);
-    }
+    printArray (a,n);
     int c[n+1];
     printf("\n Enter the element u want to insert at beginning  : ");
     scanf("%d",&x);
