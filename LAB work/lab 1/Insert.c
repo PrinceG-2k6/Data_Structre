@@ -63,10 +63,7 @@ int main()
         c[i]=a[i];
     }
 
-    for(i=0;i<n+1;i++)
-    {
-        printf("%d  ",c[i]);
-    }
+    printArray (a,n);
 
     return 0;
 
