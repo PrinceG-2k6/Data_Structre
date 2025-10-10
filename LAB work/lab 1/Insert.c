@@ -28,10 +28,7 @@ int main()
         c[i+1]=a[i];
     }
 
-    for(i=0;i<n+1;i++)
-    {
-        printf("%d  ",c[i]);
-    }
+    printArray (a,n+1);
 
     printf("\n Enter the element u want to insert at end  : ");
     scanf("%d",&x);
