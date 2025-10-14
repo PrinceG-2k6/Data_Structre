@@ -40,6 +40,7 @@ int main()
     {
         printf("%.1f | ", a[i]);
     }
+    printf("........\n");
     avg(a,m,n);    
 
     return 0;
