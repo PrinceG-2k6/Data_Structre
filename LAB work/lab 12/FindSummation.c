@@ -74,9 +74,11 @@ void deleteTree(struct node* root) {
 int main() {
     struct node* root = createNode(6);
     root->left = createNode(2);
-    root->right = createNode(7);
+    root->right = createNode(9);
     root->left->left = createNode(1);
     root->left->right = createNode(0);
+    root->right->left = createNode(7);
+    root->right->right = createNode(10);
     
     /*
                 4
