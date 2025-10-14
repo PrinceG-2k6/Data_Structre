@@ -94,7 +94,7 @@ int main() {
     struct node* node1=NULL;
     struct node* node2=NULL;
 
-    int target = 7;
+    int target = 6;
     findAndPrintPair(root, target);
     
 
