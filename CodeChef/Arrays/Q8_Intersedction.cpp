@@ -3,6 +3,14 @@
 using namespace std;
 
 vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+    vector<int> nums;
+    for(int n : nums1){
+        if (find(nums2.begin(), nums2.end(), n) != nums2.end()&& !(find(nums.begin(), nums.end(), n) != nums.end()) ) {
+        nums.push_back(n);
+        }
+    }  
+    reverse(nums.begin(),nums.end());
+    return nums;
     
 }
 
