@@ -41,14 +41,12 @@ int main() {
         cout<<"\nEnter The Size : "<<endl;
         cin>>n;
         vector<int> nums(n);
-        vector<int> nums_result;
         for(int i = 0; i < n; i++){
             scanf("%d", &nums[i]);
         }
 
-        nums_result = sol.maxSubArray(nums);
-        n = nums_result.size();
-        for(int i = 0; i < n; i++){
+        vector<int> nums_result= sol.maxSubArray(nums);
+        for(int i = 0; i < nums_result.size(); i++){
             printf("%d ",nums_result[i]);
         }
 
