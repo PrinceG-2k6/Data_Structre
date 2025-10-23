@@ -3,20 +3,23 @@
 using namespace std;
 
 void findSuperstarDishes(vector<long long> &arr) {
+    sort(arr.begin(), arr.end()); 
+
     int n = arr.size();
-    vector<long long> a;
-    int super = n/3;
-    for(int i =0;i<n;i++){
-        int cnt = count(arr.begin(),arr.end(),arr[i]);
-        if(cnt >= super && find(a.begin(), a.end(), arr[i]) == a.end()){
-            a.push_back(arr[i]);
+    int threshold = n / 3;
+    int count = 1;
+
+    for (int i = 1; i <= n; i++) {
+        if (i < n && arr[i] == arr[i - 1]) {
+            count++;
+        } else {
+            if (count > threshold)
+                cout << arr[i - 1] << " ";
+            count = 1;
         }
     }
+    cout << "\n";
 
-    n = a.size();
-    for(int i = 0; i < n; i++){
-            cout << a[i] << " ";
-    }
 
 }
 
