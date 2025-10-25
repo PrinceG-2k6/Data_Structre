@@ -3,8 +3,12 @@ using namespace std;
 
 class Solution {
 public:
-    int singleNum(vector<int>& a) {
-        
+    int singleNum(vector<int>& nums) {
+        int result = 0;
+        for (int num : nums) {
+            result ^= num;  // XOR accumulates the unique number
+        }
+        return result;
     }
 };
 
