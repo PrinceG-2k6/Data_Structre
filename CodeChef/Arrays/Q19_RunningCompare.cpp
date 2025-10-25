@@ -4,16 +4,14 @@ using namespace std;
 class Solution {
 public:
     int countHappy(vector<int>& a,vector<int>& b) {
-        vector<int> c(a.size());
+        int happy =0;
        for(int i =0;i<a.size();i++){
             if(a[i]<=2*b[i] && b[i]<=2*a[i]){
-                c[i]=1;
-            }else{
-                c[i]=0;
+                happy++;
             }
        }
 
-       return count(c.begin(),c.end(),1);
+       return happy;
     }
 };
 
