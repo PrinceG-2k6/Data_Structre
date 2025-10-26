@@ -1,21 +1,40 @@
-#include <stdio.h>
+#include <bits/stdc++.h>
+using namespace std;
+class Solution {
+public:
+    int majorityElement(vector<int>& arr) {
+        int candidate = arr[0];
+        int count = 1;
 
-int majorityElement(int* nums, int n) {
-    int count = 0;
-    int candidate = 0;
+        for (int i = 1; i < arr.size(); i++) {
+            if (arr[i] == candidate) {
+                count++;
+            } else {
+                count--;
+                if (count == 0) {
+                    candidate = arr[i];
+                    count = 1;
+                }
+            }
+        }
+        return candidate;  // Guaranteed to exist
+    }
+};
 
-    for (int i = 0; i < n; i++) {
-        if (count == 0)
-            candidate = nums[i];
-        count += (nums[i] == candidate) ? 1 : -1;
+
+
+int main()
+{
+    int n;
+    Solution sol;
+
+    cin >> n;
+    vector<int> a(n);
+    for (int j = 0; j < n; j++)
+    {
+        cin >> a[j];
     }
 
-    return candidate;
-}
-
-int main() {
-    int arr[] = {2, 2, 1, 1, 1, 2, 2};
-    int n = sizeof(arr)/sizeof(arr[0]);
-    printf("Majority element: %d\n", majorityElement(arr, n));
+    cout << sol.majorityElement(a);
     return 0;
 }
