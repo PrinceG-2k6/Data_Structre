@@ -1,36 +1,54 @@
-#include<bits/stdc++.h>
-
+#include <bits/stdc++.h>
 using namespace std;
 
-void findSuperstarDishes(vector<long long> &arr) {
-    int n = arr.size();
-    vector<long long> a;
-    int super = n/3;
-    for(int i =0;i<n;i++){
-        int cnt = count(arr.begin(),arr.end(),arr[i]);
-        if(cnt >= super && !(find(a.begin(), a.end(), arr[i]) == a.end())){
-            a.push_back(arr[i]);
+class Solution
+{
+public:
+    int snapStreak(int *a, int *b,int n)
+    {
+        int count = 0;
+        int max = 0;
+        for (int i = 0; i < n; i++)
+        {
+            if (a[i] != 0 && b[i] != 0)
+            {
+                count++;
+            }
+            else
+            {
+                if (count > max)
+                {
+                    max = count;
+                    count = 0;
+                }
+            }
         }
-    }
+        if (count > max)
+            max = count;
 
-    n = a.size();
-    for(int i = 0; i < n; i++){
-            cout << a[i] << " ";
+        return max;
     }
+};
 
-}
+int main()
+{
+    int t;
+    cin >> t;
 
-int main() {
-    
-    int t,n;
-    
-    cout<<"\nEnter The Size : "<<endl;
-    cin>>n;
-    vector<long long> nums(n);
-    for(int i = 0; i < n; i++){
-        cin >> nums[i];
+    Solution sol;
+    while (t--)
+    {
+        int n;
+        cin >> n;
+        int a[n], b[n];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> a[i];
+        }
+        for (int i = 0; i < n; i++)
+        {
+            cin >> b[i];
+        }
+        cout << sol.snapStreak(a, b,n) << endl;
     }
-    findSuperstarDishes(nums);
-    
-    return 0;
 }
