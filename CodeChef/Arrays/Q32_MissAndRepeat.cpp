@@ -13,7 +13,6 @@ public:
 
         int repeating = -1, missing = -1;
 
-        // Find the repeating and missing numbers
         for (int i = 1; i <= n; i++) {
             if (freq[i] == 2) {
                 repeating = i;
