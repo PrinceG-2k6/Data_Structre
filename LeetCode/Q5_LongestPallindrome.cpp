@@ -3,40 +3,38 @@ using namespace std;
 
 class Solution {
 public:
-    std::string longestPalindrome(std::string s) {
-        if (s.length() <= 1) {
-            return s;
+    string longestPalindrome(string s) {
+        string s1;
+        s1.push_back('#');
+        for(auto ch : s){
+            s1.push_back(ch);
+            s1.push_back('#');
         }
-        
-        int maxLen = 1;
-        std::string maxStr = s.substr(0, 1);
-        s = "#" + std::regex_replace(s, std::regex(""), "#") + "#";
-        std::vector<int> dp(s.length(), 0);
-        int center = 0;
-        int right = 0;
-        
-        for (int i = 0; i < s.length(); ++i) {
-            if (i < right) {
-                dp[i] = std::min(right - i, dp[2 * center - i]);
+        int n=s1.size();
+        vector<int> arr(n,0);
+        int c=0,r=0;
+        for(int i=1;i<n-1;i++){
+            int mir=2*c-i;
+            if (i < r){
+                arr[i]=min(r-i,arr[mir]);
             }
-            
-            while (i - dp[i] - 1 >= 0 && i + dp[i] + 1 < s.length() && s[i - dp[i] - 1] == s[i + dp[i] + 1]) {
-                dp[i]++;
+            while((i-1-arr[i]>=0)&& (i+1+arr[i])<n&& s1[i +1+arr[i]]==s1[i-1-arr[i]]){
+                arr[i]++;
             }
-            
-            if (i + dp[i] > right) {
-                center = i;
-                right = i + dp[i];
-            }
-            
-            if (dp[i] > maxLen) {
-                maxLen = dp[i];
-                maxStr = s.substr(i - dp[i], 2 * dp[i] + 1);
-                maxStr.erase(std::remove(maxStr.begin(), maxStr.end(), '#'), maxStr.end());
+            if(i+arr[i]>r){
+                r=i+arr[i];
+                c=i;
             }
         }
-        
-        return maxStr;
+        int maxlen=0,maxcen=0;
+        for(int i=0;i<n;i++){
+              if(arr[i]>maxlen){
+                maxcen=i;
+                maxlen=arr[i];
+              }
+        }
+        int start=(maxcen-maxlen)/2;
+        return s.substr(start,maxlen);
     }
 };
 int main() {
