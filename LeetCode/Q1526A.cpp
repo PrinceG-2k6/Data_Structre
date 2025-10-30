@@ -21,7 +21,7 @@ public:
 int main()
 {
     Solution s;
-    vector<int> target = {1, 2, 3, 2, 1};
+    vector<int> target = {3, 1, 5, 4, 2, 6};
     cout << "Operations: " << s.minNumberOperations(target) << endl;
     return 0;
 }
