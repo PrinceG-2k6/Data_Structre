@@ -1,49 +1,49 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
-public:
-    int maximumGap(vector<int>& nums) {
-        long long n = nums.size(); //To prevent integer overflow during index calculation
-        int maxi = *max_element(nums.begin(),nums.end());
-        int mini = *min_element(nums.begin(),nums.end());
-
-        if(maxi == mini){
-            return 0;
-        }
-
-        vector<int> bucketLargest(n,INT_MIN);
-        vector<int> bucketSmallest(n,INT_MAX);
-
-        for(int i=0;i<n;i++){
-            int index = (((nums[i] - mini)*(n-1))/(maxi - mini));
-            bucketLargest[index] = max(bucketLargest[index],nums[i]);
-            bucketSmallest[index] = min(bucketSmallest[index],nums[i]);
-        }
-
-        int lG = 0;
-        int i = 0, j = 1;
-        while(j<n){
-            if(bucketLargest[j] == INT_MIN){
-                j++;
-            }
-            else if(bucketLargest[i] == INT_MIN){
-                i++;
-            }
-            else{
-                lG = max(lG,bucketSmallest[j] - bucketLargest[i]);
-                i++,j++;
-            }
-        }
-
-        return lG;
-    }
+struct Bucket {
+  int mn;
+  int mx;
 };
 
-int main(){
+class Solution {
+ public:
+  int maximumGap(vector<int>& nums) {
+    if (nums.size() < 2)
+      return 0;
 
-    Solution sol;
-    vector<int> nums = {3,6,9,1};
-    cout<<sol.maximumGap(nums);
-    return 0;
+    const int mn = *min_element(nums.begin(), nums.end());
+    const int mx = *max_element(nums.begin(), nums.end());
+    if (mn == mx)
+      return 0;
+
+    const int gap = ceil((mx - mn) / (double)(nums.size() - 1));
+    const int bucketSize = (mx - mn) / gap + 1;
+    vector<Bucket> buckets(bucketSize, {INT_MAX, INT_MIN});
+
+    for (const int num : nums) {
+      const int i = (num - mn) / gap;
+      buckets[i].mn = min(buckets[i].mn, num);
+      buckets[i].mx = max(buckets[i].mx, num);
+    }
+
+    int ans = 0;
+    int prevMax = mn;
+
+    for (const Bucket& bucket : buckets) {
+      if (bucket.mn == INT_MAX)
+        continue;  // empty bucket
+      ans = max(ans, bucket.mn - prevMax);
+      prevMax = bucket.mx;
+    }
+
+    return ans;
+  }
+};
+
+int main() {
+  Solution sol;
+  vector<int> nums = {49, 9, 21, 25 ,29, 37, 43,3};
+  cout << sol.maximumGap(nums);
+  return 0;
 }
