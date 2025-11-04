@@ -14,12 +14,15 @@ int main(){
         mpp[arr[i]]++;
     }
 
-
-
-    for(int i=0;i<n;i++){
-        cout<<arr[i];
+    
+    for(auto it: mpp){
+        cout<<it.first<<" "<<it.second<<endl;
     }
 
+
+    // for(int i=0;i<n;i++){
+    //     cout<<arr[i];
+    // }
     // cout<<endl<<"Frequency of 1 : "<<hash[1];
     int target;
     cout<<endl<<"Enter the Number to check frequency : ";
