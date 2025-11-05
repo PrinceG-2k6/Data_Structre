@@ -53,7 +53,7 @@ int main()
     int x = 2;
     vector<int> ans = sol.findXSum(nums, k, x);
     for (int x : ans)
-    {
+    {   
         cout << x << " ";
     }
     
