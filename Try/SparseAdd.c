@@ -66,8 +66,68 @@ int main(){
     int s3[nz1+nz2][3];
     int mark =0;
     int i=0,j=0,k=0,l=0;
+    while(i<nz1 && k<nz2){
+        if(s1[i][0]==s2[k][0]){
+            if(s1[i][1]<s2[k][1]){
+                s3[mark][0]=i;
+                s3[mark][1]=s1[i][1];
+                s3[mark][2]=s1[i][2];
+                mark++;
+                i++;
+
+            }
+            else if(s1[i][1]>s2[k][1]){
+                s3[mark][0]=k;
+                s3[mark][1]=s2[k][1];
+                s3[mark][2]=s2[k][2];
+                mark++;
+                k++;
+            }
+            else{
+                s3[mark][0]=i;
+                s3[mark][1]=s2[k][1];
+                s3[mark][2]=s2[k][2] + s1[i][2] ;
+                mark++;
+                i++;
+                k++;
+            }
+        }
+        else{
+            if(s1[i][0]<s2[k][0]){
+                s3[mark][0]=i;
+                s3[mark][1]=s1[i][1];
+                s3[mark][2]=s1[i][2];
+                mark++;
+                i++;
+            }
+            else{
+                s3[mark][0]=k;
+                s3[mark][1]=s2[k][1];
+                s3[mark][2]=s2[k][2];
+                mark++;
+                k++;
+            }
+        }
+    }
+    if(i<nz1){
+        s3[mark][0]=i;
+                s3[mark][1]=s1[i][1];
+                s3[mark][2]=s1[i][2];
+                mark++;
+                i++;
+    }
+    if(k<nz2){
+        s3[mark][0]=k;
+                s3[mark][1]=s2[k][1];
+                s3[mark][2]=s2[k][2];
+                mark++;
+                k++;
+    }
 
     
+    PrintArray(mark,3,s3);
+
+
 
     return 0;
 }
