@@ -10,7 +10,8 @@ typedef struct node
 
 prio* enq(prio*head ,int x,int p){
     prio * n = (prio*)malloc(sizeof(prio));
-    
+    n->val =x;
+    n->priority =p;
     if(head==NULL || head->priority<p){
         n->next=head;
         head = n;
