@@ -4,23 +4,24 @@ using namespace std;
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if (numRows == 1) return s;
-        char a[10000];
-        std::size_t len = s.length();
-        int index =0;
-        for (int i = 0; i < numRows; i++) {
-            for (int j = i; j < len; j +=2*(numRows-1)) {
-                a[index++] = s[j];
-                if (i > 0 && i<numRows-1 && j+2*(numRows-1)-2*i<len) {
-                    a[index++] = s[j + 2*(numRows - 1)-2*i];
-                }
-            }
+        if (numRows == 1 || numRows >= s.size()) 
+            return s;
+        vector<string> rows(numRows);
+        int row = 0;
+        bool goingDown = false;
+        for (char c : s) {
+            rows[row] += c;
+            if (row == 0 || row == numRows - 1)
+                goingDown = !goingDown;
+            row += goingDown ? 1 : -1;
         }
-        a[index]='\0';
-        return a;
+        string ans = "";
+        for (string &r : rows)
+            ans += r;
+        return ans;
     }
 };
 int main(){
     Solution sol;
-    cout<<sol.convert("PAYPALISHIRING",14)<<endl;
+    cout<<sol.convert("PAYPALISHIRING",3)<<endl;
 }
