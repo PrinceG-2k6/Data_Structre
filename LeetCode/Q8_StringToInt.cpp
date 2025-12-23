@@ -31,5 +31,5 @@ public:
 };
 int main(){
     Solution sol;
-    cout<<sol.myAtoi("-123")<<endl;
+    cout<<sol.myAtoi("   -00012 3")<<endl;
 }
