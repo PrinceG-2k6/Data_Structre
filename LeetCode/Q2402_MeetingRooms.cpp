@@ -1,80 +1,71 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Solution {
+class Solution
+{
 public:
-    struct Request {
-        int start, end, id;
-    };
+    typedef pair<long long,int> P;
 
-    int mostBooked(int n, vector<vector<int>>& meetings) {
-        int m = meetings.size();
-        vector<int> result(m);
-        vector<int> cnt(n, 0);
-        vector<Request> reqs;
 
-        // Create request list
-        for (int i = 0; i < m; ++i) {
-            reqs.push_back({meetings[i][0], meetings[i][1], i});
+    int mostBooked(int n, vector<vector<int>> &meetings)
+    {
+
+        sort(meetings.begin(), meetings.end()); // O(nlon)
+
+        vector<int> roomUsedCount(n, 0); // Room i used how many times
+
+        priority_queue<P,vector<P>,greater<P>> usedRooms;
+        priority_queue<int,vector<int>,greater<int>> availableRooms;
+
+        for(int room = 0 ;room <n;room++){
+            availableRooms.push(room);
         }
 
-        // Sort by start time
-        sort(reqs.begin(), reqs.end(), [](const Request& a, const Request& b) {
-            return a.start < b.start;
-        });
+        for(vector<int>& meet : meetings) {
+            int start = meet[0];
+            int end = meet[1];
+            int duration = end - start;
+            bool found = false;
 
-        // Min-heap of available room IDs
-        priority_queue<int, vector<int>, greater<>> avail;
-
-        // Min-heap of (endTime, roomID)
-        priority_queue<pair<long long, int>, vector<pair<long long, int>>, greater<>> assign;
-
-        for (int i = 0; i < n; ++i) avail.push(i);
-
-        for (auto& request : reqs) {
-            long long start = request.start, end = request.end;
-
-            // Free up rooms that have completed their meetings
-            while (!assign.empty() && start >= assign.top().first) {
-                avail.push(assign.top().second);
-                assign.pop();
+            while(!usedRooms.empty() && usedRooms.top().first<=start){
+                int room = usedRooms.top().second;
+                usedRooms.pop();
+                availableRooms.push(room);
             }
 
-            if (!avail.empty()) {
-                // Assign a free room
-                int roomid = avail.top();
-                avail.pop();
-                cnt[roomid]++;
-                result[request.id] = roomid;
-                assign.push({end, roomid});
-            } else {
-                // Extend the meeting in the earliest available room
-                auto [freeTime, room] = assign.top();
-                assign.pop();
-                assign.push({freeTime + (end - start), room});
-                cnt[room]++;
-                result[request.id] = room;
-            }
+            if(!availableRooms.empty()){
+                int room = availableRooms.top();
+                availableRooms.pop();
+                usedRooms.push({end,room});
+                roomUsedCount[room]++;
+            }else{//We dont have any room available now. Pick earliest one
+                int room = usedRooms.top().second;
+                long long endTime = usedRooms.top().first;
+                usedRooms.pop();
+                usedRooms.push({endTime+duration,room});
+                roomUsedCount[room]++;
+            } 
+
         }
+        int resultRoom = -1;
+        int maxUse = 0;
 
-        // Find room with maximum meetings
-        int maxi = -1;
-        int index = -1;
-        for (int i = 0; i < n; ++i) {
-            if (cnt[i] > maxi) {
-                index = i;
-                maxi = cnt[i];
+        for (int room = 0; room < n; room++) {
+            if (roomUsedCount[room] > maxUse) {
+                resultRoom = room;
+                maxUse = roomUsedCount[room];
             }
         }
 
-        return index;
+        return resultRoom;
     }
+
+    
 };
 
 int main()
 {
     Solution sol;
-    vector<vector<int>> meetings ={{0,10},{1,5},{2,7},{3,4}};
-    cout << sol.mostBooked(2,meetings) << endl;
+    vector<vector<int>> meetings = {{0, 10}, {1, 5}, {2, 7}, {3, 4}};
+    cout << sol.mostBooked(2, meetings) << endl;
 }
-    
