@@ -18,7 +18,7 @@ public:
         priority_queue<int,vector<int>,greater<int>> availableRooms;
 
         for(int room = 0 ;room <n;room++){
-            availableRooms.push(room);
+            availableRooms.push(room);//Filling all room in available room
         }
 
         for(vector<int>& meet : meetings) {
