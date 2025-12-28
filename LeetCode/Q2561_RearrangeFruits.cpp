@@ -4,24 +4,24 @@ using namespace std;
 class Solution {
 public:
     long long minCost(vector<int>& A, vector<int>& B) {
+        unordered_map<int, int> freq;
+        for (int x : A) freq[x]++;
+        for (int x : B) freq[x]--;
 
-        map<int,int> map1;
-        int min_value=INT_MAX;
-        for(int n: A){
-            map1[n]++;
-            min_value = min(min_value,n);
-        }
-        for(int n: B){
-            map1[n]--;
-            min_value = min(min_value,n);
-        }
-        long long ans=0;
         vector<int> extra;
-        for(auto& p:map1){
-            if(p.second %2!=0) return -1;
+        int minVal = INT_MAX;
+        for (auto& [k, v] : freq) {
+            if (v % 2) return -1;
+            for (int i = 0; i < abs(v) / 2; ++i)
+                extra.push_back(k);
+            minVal = min(minVal, k);
         }
 
-        return ans;
+        sort(extra.begin(), extra.end());
+        long long cost = 0;
+        for (int i = 0; i < extra.size() / 2; ++i)
+            cost += min(extra[i], 2 * minVal);
+        return cost;
     }
 };
 
