@@ -1,6 +1,7 @@
 #include <stack>
 #include <string>
 #include <algorithm>
+#include <bits/stdc++.h>
 using namespace std;
 
 class Solution {
@@ -25,3 +26,9 @@ public:
         return maxLength;
     }
 };
+int main()
+{
+    Solution sol;
+    cout<<sol.longestValidParentheses(")()())")<<endl;
+    
+}
