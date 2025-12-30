@@ -44,11 +44,15 @@ public:
     }
 };
 
-
 int main()
 {
     Solution sol;
-    vector<string> allowed ={"BCC","CDE","CEA","FFF"};
-    cout<<sol.pyramidTransition("BCD",allowed)<<endl;
+    vector<vector<int>> grid ={{4,3,8,4},{9,5,1,9},{2,7,6,2}};
     
-}   
+    // vector<vector<int>> grid ={{1,8,6},{10,5,0},{4,2,9}};
+    // 4 3 8 4
+    // 9 5 1 9
+    // 2 7 6 2
+    cout<<sol.numMagicSquaresInside(grid)<<endl;
+    
+}    
