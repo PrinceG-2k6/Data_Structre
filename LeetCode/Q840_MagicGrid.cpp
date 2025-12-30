@@ -9,7 +9,13 @@ public:
         int a = grid[r][c],b = grid[r][c+1],d = grid[r][c+2]; // grid ele except centre
         int e = grid[r+1][c],f = grid[r+1][c+2];
         int h = grid[r+2][c],i = grid[r+2][c+1],j = grid[r+2][c+2];
-
+        /**
+         * 
+         * a b d
+         * e   f
+         * h i j 
+         * 
+         */
         bool seen[10] = {false};
         int arr[9] = {a,b,d,e,f,h,i,j,5};// 1 - 9 checking
         for (int x : arr) {
