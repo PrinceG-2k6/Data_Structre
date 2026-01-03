@@ -1,35 +1,53 @@
 #include <bits/stdc++.h>
 using namespace std;
-void factorialDec(int n){
-    if(n==1 || n==0){
-        cout<<n;
+void PrintDec(int n){
+    if(n==0){
         return;
     }
     cout<<n<<" ";
-    factorialDec(n-1);
+    PrintDec(n-1);
 }
 
-// void factorialInc(int a,int b){
+// ===========================================
+// void PrintInc(int a,int b){
 //     if(a<=b){
 //         cout<<a<<" ";
 //     }
 //     else{return;}
-//     factorialInc(a+1,b);
+//     PrintInc(a+1,b);
 // }
 
-void factorialInc(int n){
+void PrintInc(int n){
     
     if(n==0){
         return;
     }
-    factorialInc(n-1);
+    PrintInc(n-1);
     cout<<n<<" ";
     
 }
+
+
+// ===========================================
+
+void PrintDecInc(int n){
+    // PrintDec(n);
+    // PrintInc(n);
+    if(n==0) return;
+    cout<<n<<" ";
+    PrintDecInc(n-1);
+    cout<<n<<" ";
+}
+
+
+
 int main()
 {   
-    factorialDec(5);
+    PrintDec(5);
     cout<<endl;
-    // factorialInc(1,10)
-    factorialInc(10);
+    // PrintInc(1,10)
+    PrintInc(10);
+    printf("\n");
+    PrintDecInc(10);
+
 }
