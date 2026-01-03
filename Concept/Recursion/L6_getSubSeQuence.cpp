@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 void subsequence(string s, int idx, string curr) {
@@ -7,12 +7,15 @@ void subsequence(string s, int idx, string curr) {
         return;
     }
 
+    // exclude
     subsequence(s, idx + 1, curr + "_ ");
 
+    // include
     subsequence(s, idx + 1, curr + s[idx] + " ");
 }
 
-
-int main(){
+int main() {
     string s = "abc";
+    subsequence(s, 0, "");
+    return 0;
 }
