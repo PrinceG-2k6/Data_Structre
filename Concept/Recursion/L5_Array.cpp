@@ -18,6 +18,14 @@ int MaxArray(int a[],int n,int size){
     return max(a[n],MaxArray(a,n+1,size));
 }
 
+void allIndices(int arr[], int n, int idx, int target, vector<int>& res) {
+    if (idx == n) return;
+
+    if (arr[idx] == target)
+        res.push_back(idx);
+
+    allIndices(arr, n, idx + 1, target, res);
+}
 
 int main(){
     int a[]={1,2,3,4,5,6};
