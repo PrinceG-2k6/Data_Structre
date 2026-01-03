@@ -19,11 +19,12 @@ void factorialDec(int n){
 
 void factorialInc(int n){
     
-    if(n==0){
-        return;
-    }
     factorialInc(n-1);
     cout<<n<<" ";
+    if(n==1 || n==0){
+        cout<<n;
+        return;
+    }
     
 }
 int main()
