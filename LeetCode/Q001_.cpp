@@ -18,18 +18,18 @@ public:
                 if(ans[j]>rest[j]){
                     ans[j] = rest[j];
                     int k = j;
-                    int temp = maxans;
                     while(abs(ans[k]-ans[k-1])>diff[k-1]){
                         ans[k-1] = ans[k]+diff[k-1];
-                        maxans = max(ans[k],ans[k-1]);
                         k--;
                     }
-                    maxans = max(temp,maxans);
+                    
                 }
             }
-            maxans= max(maxans,ans[j]);
             j++;
         }      
+        for(int n : ans){
+            maxans = max(maxans,n);
+        }
         return maxans;
     }
 };
