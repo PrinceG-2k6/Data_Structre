@@ -10,7 +10,7 @@ public:
             rest[r[0]] = r[1];
         }
         int maxans=0;
-        int j=1;
+        int j=1;    
         ans[0] = 0;
         while(j<n){
             ans[j] = ans[j-1]+diff[j-1];
