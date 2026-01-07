@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
-\
+
 class Solution {
 public:
     vector<int> findErrorNums(vector<int>& nums) {
