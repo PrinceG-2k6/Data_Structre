@@ -32,5 +32,8 @@ public:
 int main (){
     Solution sol;
     vector<int> nums = {4,3,2,7,8,2,3,1};
-    cout<<sol.findDisappearedNumbers(nums);
+    vector<int> ans = sol.findDisappearedNumbers(nums);
+    for(int n:ans){
+        cout<<n<<" ";
+    }
 }
