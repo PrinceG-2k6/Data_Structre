@@ -3,18 +3,29 @@ using namespace std;
 
 class Solution {
 public:
-    int minTimeToVisitAllPoints(vector<vector<int>>& points) {
-        int Distance =0;
+    vector<int> findDisappearedNumbers(vector<int>& nums) {
+        // 7 3 2 4 8 2 3 1
+        // 3 3 2 4 8 2 7 1
+        // 2 3 3 4 8 2 7 1
+        // 3 2 3 4 8 2 7 1
+        // 1 2 3 4 3 2 7 8
 
-        for(int i=1;i<points.size();i++){
-            int a  = abs(points[i][0]-points[i-1][0]);
-            int b  = abs(points[i][1]-points[i-1][1]);
-
-            Distance += max(a,b);
-
+        for(int i =0;i<nums.size();i++){
+            while(nums[i]!=i+1 && nums[nums[i]-1]!=nums[i]){
+                int t = nums[nums[i]-1];
+                nums[nums[i]-1] = nums[i];
+                nums[i] = t;
+            }
         }
-
-        return Distance;
+        vector<int> ans;
+        int count =1;
+        for(int i =0;i<nums.size();i++){
+            if(nums[i]!=count){
+                ans.push_back(count);
+            }
+            count++;
+        }
+        return ans;
     }
 };
 
