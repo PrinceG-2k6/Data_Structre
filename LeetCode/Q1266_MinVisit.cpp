@@ -17,3 +17,9 @@ public:
         return Distance;
     }
 };
+
+int main (){
+    Solution sol;
+    vector<vector<int>> points = {{1,1},{3,4},{-1,0}};
+    cout<<sol.minTimeToVisitAllPoints(points);
+}
