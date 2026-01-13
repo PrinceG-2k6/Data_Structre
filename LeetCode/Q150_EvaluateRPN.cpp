@@ -30,6 +30,6 @@ public:
 
 int main(){
     Solution sol;
-    vector<string> tokens={"2","1","+","3","*"};
+    vector<string> tokens={"10","6","9","3","+","-11","*","/","*","17","+","5","+"};
     cout<< sol.evalRPN(tokens);
 }
