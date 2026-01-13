@@ -4,7 +4,22 @@ using namespace std;
 class Solution {
 public:
     vector<string> buildArray(vector<int>& target, int n) {
+        int m = target.size();
+        int idx = 0;
+        vector<string>res;
+
+        for(int i=1;i<=n && idx<m;i++){
+             res.push_back("Push");
+           if (target[idx]==i) {
+            idx++;
+           }
+            else{
+               
+                 res.push_back("Pop");
+            }
         
+        }
+        return res;
     }
 };
 
