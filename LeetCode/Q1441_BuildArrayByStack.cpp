@@ -7,3 +7,13 @@ public:
         
     }
 };
+
+
+int main(){
+    Solution sol;
+    vector<int> target = {1,3};
+    vector<string> ans = sol.buildArray(target,3);
+    for(string s:ans){
+        cout<<s<<" ";
+    }
+}
