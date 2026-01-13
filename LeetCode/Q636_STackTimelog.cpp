@@ -54,6 +54,7 @@ public:
                     get<2>(fxn.top())+=time; //Adding the time of child fxn to the parent function, note that we can
                     // not add runtime, since it denotes the effective runtime of the child fxn which might be 
                     // affected by the child fxn of the child fxn.
+                    
             }
         }
         return freq;
