@@ -1,18 +1,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+#include <bits/stdc++.h>
+using namespace std;
+
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
-        vector<int> stack;
-        for(string c: tokens){
-            if(c[0] == '+'){
-                char a = stack.pop_back();
-                char b = stack.pop_back();
+        stack<int> st;
+
+        for (string &token : tokens) {
+            if (token == "+" || token == "-" || token == "*" || token == "/") {
+                int b = st.top(); st.pop();
+                int a = st.top(); st.pop();
+
+                if (token == "+") st.push(a + b);
+                else if (token == "-") st.push(a - b);
+                else if (token == "*") st.push(a * b);
+                else if (token == "/") st.push(a / b); // truncates toward zero
+            } 
+            else {
+                st.push(stoi(token));
             }
         }
+        return st.top();
     }
 };
+
 
 int main(){
     Solution sol;
