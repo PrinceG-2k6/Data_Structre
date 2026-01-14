@@ -13,36 +13,36 @@ void solve() {
     cin >> a >> b >> c;
 
     int K = 0;
-    int S_start = 0;
+    int sStar = 0;
     int base_local_cost = 0;
 
     for (int i = 0; i < n; ++i) {
-        int val_b = b[i] - '0';
-        int val_c = c[i] - '0';
-        int diff = val_b - val_c;
+        int x = b[i] - '0';
+        int y = c[i] - '0';
+        int diff = x - y;
         K += diff;
 
         if (a[i] == '1') {
-            S_start += diff;
+            sStar += diff;
         }
     }
 
     int p1 = 0;
     int p2 = K;
-    int p3 = S_start;
+    int p3 = sStar;
 
     if (p1 > p2) swap(p1, p2);
     if (p2 > p3) swap(p2, p3);
     if (p1 > p2) swap(p1, p2);
 
-    int S_final = p2;
+    int sfin = p2;
 
-    int total_cost = base_local_cost
-                   + abs(S_final - S_start)
-                   + abs(S_final)
-                   + abs(K - S_final);
+    int totalCost = base_local_cost
+                   + abs(sfin - sStar)
+                   + abs(sfin)
+                   + abs(K - sfin);
 
-    cout << total_cost << "\n";
+    cout << totalCost << "\n";
 }
 
 int main() {
