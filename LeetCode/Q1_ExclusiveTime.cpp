@@ -21,12 +21,12 @@ public:
             ans[start] += end;
         for (int i = 1; i < logs.size(); i++) {
             s = logs[i];
-            int nextEnd;
+            int nextStart,nextEnd;
 
             stringstream ss(s);
 
             getline(ss, part, ':'); // "0"
-            start = stoi(part);
+            nextStart= stoi(part);
 
             getline(ss, part, ':'); // "end" (ignored)
 
