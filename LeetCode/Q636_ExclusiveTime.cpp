@@ -5,27 +5,35 @@ public:
     vector<int> exclusiveTime(int n, vector<string>& logs) {
         vector<int> freq(n,0);
 
-        stack<tuple<string,int,int>> fxn;
+        stack<int> ID;
+        stack<int> start;
+        stack<int> Fee;
         for(string& log:logs){
             string id,status,timestamp;
-            int runtime,fee_init=0;
             stringstream ss(log);
             getline(ss,id,':');
             getline(ss,status,':');
             getline(ss,timestamp,':');
             if(status == "start"){
-                fxn.push({id,stoi(timestamp),fee_init});
+                ID.push(stoi(id));
+                start.push(stoi(timestamp));
+                Fee.push(0);
             }
             else{
-                int starttime=get<1>(fxn.top());
-                int fee = get<2>(fxn.top());
-                int time = stoi(timestamp)-starttime+1;
-                runtime = time - fee;
-                
-                freq[stoi(id)]+=runtime;
-                fxn.pop();
-                if(!fxn.empty())
-                    get<2>(fxn.top())+=time;
+                int startTime = start.top();
+                int id = ID.top();
+                int time = stoi(timestamp)-startTime+1;
+                int fee = Fee.top();
+                int runtime = time - fee;
+                freq[id]+=runtime;
+                fee+=time;
+                start.pop();
+                ID.pop();
+                Fee.pop();
+                if(!Fee.empty()){
+                    Fee.top()+=time;
+                }
+
             }
         }
         return freq;
