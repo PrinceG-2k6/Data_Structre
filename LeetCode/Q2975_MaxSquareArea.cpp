@@ -1,42 +1,45 @@
-#include <vector>
-#include <unordered_set>
-#include <algorithm>
-#include <cmath>
-
+#include<bits/stdc++.h>
 using namespace std;
 
 class Solution {
 public:
     static constexpr int mod=1e9+7;
-    unordered_set<int> seen;
-    int maxL=0;
-    void findLen(vector<int>& fences, int sz, bool calM){
-        sort( fences.begin(), fences.end());
-        for (int l=0; l<sz-1; l++){
-            int L=fences[l];
-            for (int r=l+1; r<sz; r++){
-                int Len=fences[r]-L;
-             //   cout<<Len<<"; ";
-                if (calM){
-                    if(Len>maxL && seen.count(Len)) maxL=Len;
-                }
-                else seen.insert(Len);
+      
+    int maximizeSquareArea(int m, int n, vector<int>& hFences, vector<int>& vFences) {
+        long long res = -1;
+        int MOD =1e9 + 7;
+
+        unordered_set<int> hEdges = getEdges(hFences,m);
+        unordered_set<int> vEdges = getEdges(vFences,n);
+
+        for(int h:hEdges){
+            if(vEdges.count(h)){
+                res = max(res,(long long)h*h);
             }
         }
+        return res == -1 ? -1:res%MOD;
     }
-    
-    int maximizeSquareArea(int m, int n, vector<int>& hFences, vector<int>& vFences) {
-        const int hz=hFences.size()+2,
-        vz=vFences.size()+2;
-        if (hz>vz)
-           return maximizeSquareArea(n, m, vFences, hFences);
-        hFences.push_back(1);
-        hFences.push_back(m);
-        vFences.push_back(1);
-        vFences.push_back(n);
-        seen.reserve(hz*(hz-1));
-        findLen(hFences, hz, 0);
-        findLen( vFences,  vz, 1);
-        return (maxL==0)?-1:(long long)maxL*maxL%mod;
+
+    unordered_set<int> getEdges(vector<int>& fences,int border){
+        fences.push_back(1);
+        fences.push_back(border);
+        sort(fences.begin(),fences.end());
+
+        unordered_set<int> edges;
+        for(int i =0;i<fences.size();++i){
+            for(int j=i+1;j<fences.size();++j){
+                edges.insert(fences[j]-fences[i]);
+            }
+        }
+
+        return edges;
     }
 };
+
+int main(){
+    Solution sol;
+    vector<int> hFences={2,3};
+    vector<int> vFences={2};
+    cout<<sol.maximizeSquareArea(4,3,hFences,vFences);
+
+}
