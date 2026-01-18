@@ -8,12 +8,18 @@ int main() {
     while (t--) {
         long long s, k, m;
         cin >> s >> k >> m;
-
-        long long lastFlip = (m / k) * k;   
-        long long elapsed = m - lastFlip;   
-        long long remaining = s - elapsed;  
-
-        cout << max(0LL, remaining) << "\n";
+        
+        if(s<k){
+            cout<<s-min(m%k,s)<<"\n";
+        }
+        else{
+            if(((m/k)%2)==0){
+                cout<<s-min(m%k,s)<<"\n";
+            }
+            else{
+                cout<<k-min(m%k,s)<<"\n";
+            }
+        }
     }
     return 0;
 }
