@@ -3,39 +3,45 @@ using namespace std;
 
 class Solution {
 public:
+    bool isMagic(vector<vector<array<int,4>>> const & prefixSum, int r, int c, int sz) {
+        int sum = prefixSum[r+sz][c+sz][2] - prefixSum[r][c][2];
+        if (sum != prefixSum[r+sz][c+1][3] - prefixSum[r][c+sz+1][3]) {
+            return false; 
+        }
 
-bool isMagicSquare(vector<vector<int>>& grid, int r, int c,int s) {
-          
+        for (int i = 0, j = r; i < sz; i++, j++) {
+            if (sum != prefixSum[j+1][c+sz][0] - prefixSum[j+1][c][0]) {
+                return false;
+            }
+        }
+        for (int i = 0, j = c; i < sz; i++, j++) {
+            if (sum != prefixSum[r+sz][j+1][1] - prefixSum[r][j+1][1]) return false;
+        }
+        return true;
     }
 
-    int findMagicSquare(vector<vector<int>>& grid,int a,int b,int m){
-        int hsum =0;
-        int vsum =0;
-        int k =0;
-        int size =1;
-        for(int i=a,j=b;i<m && j<m;i++,j++){
-            hsum += grid[k][j];
-            vsum += grid[j][k];
+    int largestMagicSquare(vector<vector<int>>& grid) {
+        int m = grid.size(), n = grid[0].size();
+        vector<vector<array<int,4>>> prefixSum(m+1, vector<array<int,4>>(n+2));
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                int val = grid[i-1][j-1];
+                prefixSum[i][j][0] = prefixSum[i][j-1][0] + val;
+                prefixSum[i][j][1] = prefixSum[i-1][j][1] + val;
+                prefixSum[i][j][2] = prefixSum[i-1][j-1][2] + val;
+                prefixSum[i][j][3] = prefixSum[i-1][j+1][3] + val;
+            }
+        }
 
-            if(hsum == vsum){
-                int s = a-i+1;
-                if(isMagicSquare(grid,a,b,s)){
-                    size = max(size,s);
+        int sz = min(m, n);
+        for (int k = sz; k >= 2; k--) {
+            for (int i = 0; i + k <= m; i++) {
+                for (int j = 0; j + k <= n; j++) {
+                    if (isMagic(prefixSum, i, j, k)) return k;
                 }
             }
         }
-
-    }
-    int largestMagicSquare(vector<vector<int>>& grid) {
-        int m = grid.size();
-        int n = grid[0].size();
-        int size =1;
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                size = max(size,findMagicSquare(grid,i,j,min(m,n)));
-            }
-        }
-        return size;
+        return 1;
     }
 };
 
