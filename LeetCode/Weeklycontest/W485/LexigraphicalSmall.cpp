@@ -9,6 +9,8 @@ public:
         }
 
         string st;
+        
+        reverse(s.begin(), s.end());
 
         for (char c : s) {
             freq[c - 'a']--;
@@ -28,5 +30,5 @@ public:
 
 int main(){
     Solution sol;
-    cout<<sol.lexSmallestAfterDeletion("aaccb");
+    cout<<sol.lexSmallestAfterDeletion("ccbab");
 }
